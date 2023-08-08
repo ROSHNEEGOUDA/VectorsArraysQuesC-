@@ -105,6 +105,7 @@ int main()
     return 0;
 }
 
+
 //Rotate the given array'a' by k steps, where k is non-negative.(k can be greater than the size of array also)
 //[1,2,3,4,5] let k=2
 //step1 5,1,2,3,4
@@ -160,6 +161,162 @@ int main()
         cout<<a<<" ";
     }
     cout<<endl;
+}
+
+
+//Given an array of integers of size n. Answer q queries where you need to print sum of values in a given range of indices from l to r(both will be included)
+#include<iostream>
+#include<vector>
+using namespace std;
+int main()
+{
+    int n;
+    cin>>n;
+    vector<int> v(n+1,0);
+    for(int i=1;i<=n;i++)
+    {
+        cin>>v[i];
+    }
+    for(int i=1;i<=n;i++)
+    {
+        v[i+=v[i-1]];
+    }
+    int q;
+    cin>>q;
+    while(q--)
+    {
+        int l,r;
+        cin>>l>>r;
+        int ans=0;
+        ans=v[r]-v[l-1];
+        cout<<ans<<endl;
+    }
+    return 0;
+}
+
+
+//Check if we can partition the array into two subarrays with equal sum. ie; prefix sum of a part of the array is equal to the suffix sum of rest of the array
+//5
+//6 2 4 3 1
+//tot=16
+prefix=6+2=8
+//sum sum=8
+#include<iostream>
+#include<vector>
+using namespace std;
+bool  checkprefx(vector<int> &v)
+{
+    int tot=0;
+    for(int i=0;i<v.size();i++)
+    {
+        tot=tot+v[i];
+    }
+    int prefix=0;
+    for(int i=0;i<v.size();i++)
+    {
+        prefix+=v[i];
+        int suffix=tot-prefix;
+        if(suffix==prefix)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+int main()
+{
+    int n;
+    cin>>n;
+    vector<int> v;
+    for(int i=0;i<n;i++)
+    {
+        int ele;
+        cin>>ele;
+        v.push_back(ele);
+    }
+    cout<<checkprefx(v)<<endl;
+}
+
+
+//Given an integers array 'a' return the prefix sum/running sum in array without creating a new array
+//[ 5, 4, 1, 2, 3]
+// 5, 9, 10, 12, 15
+#include<iostream>
+#include<vector>
+using namespace std;
+void runningsum(vector<int> &v)
+{
+    for(int i=1;i<v.size();i++)
+    {
+        v[i]+=v[i-1];
+    }
+    return;
+}
+int main()
+{
+    int n;
+    cin>>n;
+    vector<int> v;
+    for(int i=0;i<n;i++)
+    {
+        int ele;
+        cin>>ele;
+        v.push_back(ele);
+    }
+    runningsum(v);
+    for(int i=0;i<n;i++)
+    {
+        cout<<v[i]<<" ";
+    }
+    cout<<endl;
+}
+
+
+//Given 2 arrays of size m and n sorted in increasing order. Merge them into a single sorted array of size m+n
+#include<iostream>
+using namespace std;
+int main()
+{
+    int ar1[]={1,6,7,10};
+    int ar2=[]={0,1,3,8,11,12,15,18}
+    int n=4;
+    int m=8;
+    int res[m+n];
+    int i=0;
+    int j=0;
+    int k=0;
+    while(i<m and j<n) 
+    {//both i & j within limits
+        if(ar1[i]<ar2[j])
+    {
+        res[k]=ar1[i];
+        k++;
+        i++;
+    }
+    else{
+        res[k]=ar2[j];
+        k++;
+        j++;
+    }
+    }
+while(i<m)
+{//ar1 is exhausted & we have ele left
+    res[k]=ar1[i];
+    i++;
+    k++;
+}
+while(j<n)
+{
+    //ar2 is exhausted & we have some ele left
+    res[k]=ar2[j];
+    k++;
+    j++;
+}
+for(int i=0;i<(m+n);i++)
+{
+    cout<<res[i]<<" ";
+}
+    return 0;
 }
 
 
